@@ -7,6 +7,10 @@ use App\Models\User;
 
 class UserController extends Controller
 {
+  public function __construct(){
+    $this->middleware('auth:api');
+  }
+   
   public function getAll(){
     $users = User::all();
     return response()->json($users);

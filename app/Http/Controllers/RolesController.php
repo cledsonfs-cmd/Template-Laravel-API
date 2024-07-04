@@ -7,6 +7,10 @@ use App\Models\Role;
 
 class RolesController extends Controller
 {
+    public function __construct(){
+      $this->middleware('auth:api');
+    }
+
     public function getAll(){
       $roles = Role::all();
       return response()->json($roles);
