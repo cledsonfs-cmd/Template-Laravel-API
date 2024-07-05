@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Routing\Controller as BaseController;
 
@@ -16,11 +17,11 @@ use Illuminate\Routing\Controller as BaseController;
  *     type="apiKey",
  *     in="header",
  *     securityScheme="token",
- *     name="Authorization", 
+ *     name="Authorization"
  * )
  */
 
 class Controller extends BaseController
 {
-    use AuthorizesRequests, ValidatesRequests;
+    use AuthorizesRequests, DispatchesJobs,ValidatesRequests;
 }

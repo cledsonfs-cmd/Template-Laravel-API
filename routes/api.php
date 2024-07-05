@@ -30,11 +30,17 @@ Route::post('/logout', [AuthController::class, 'logout']);
 Route::post('/refresh', [AuthController::class, 'refresh']);
 
 
-Route::get('/users', [UserController::class, 'getAll']);
-Route::get('/users/{id}', [UserController::class, 'findId']);
-Route::post('/users', [UserController::class, 'save']);
-Route::put('/users/{id}', [UserController::class, 'update']);
-Route::delete('/users/{id}', [UserController::class, 'delete']);
+Route::middleware('auth:api')->group(function() {  
+  Route::get('/users', [AuthController::class, 'getAll']);
+});
+
+
+
+// Route::get('/users', [UserController::class, 'getAll']);
+// Route::get('/users/{id}', [UserController::class, 'findId']);
+// Route::post('/users', [UserController::class, 'save']);
+// Route::put('/users/{id}', [UserController::class, 'update']);
+// Route::delete('/users/{id}', [UserController::class, 'delete']);
 
 Route::get('/roles', [RolesController::class, 'getAll']);
 Route::get('/roles/{id}', [RolesController::class, 'findId']);

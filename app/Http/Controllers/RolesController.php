@@ -14,8 +14,8 @@ class RolesController extends Controller
       $this->middleware('auth:api');
     }
 
- /**
- * Me
+  /**
+ * Get All
  * @OA\Get (
  *     path="/api/roles",
  *     tags={"Roles"},
@@ -57,21 +57,18 @@ class RolesController extends Controller
  *     }
  * )
  */
-    public function getAll(){
-      // $roles = Role::all();
-      // return response()->json($roles);
-      Auth::user();
-      return response()->json([
-        'meta' => [
-            'code' => 200,
-            'status' => 'success',
-            'message' => 'User fetched successfully!',
-        ],
-        'data' => [
-          Role::all(),
-        ],
-    ]);
-    }
+public function getAll(){
+  return response()->json([
+    'meta' => [
+        'code' => 200,
+        'status' => 'success',
+        'message' => 'User fetched successfully!',
+    ],
+    'data' => [
+      Role::all(),
+    ],
+]);
+}
 
     public function findId($id){
       // $role = Role::find($id);

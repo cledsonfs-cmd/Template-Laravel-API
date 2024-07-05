@@ -1,0 +1,14 @@
+php artisan serve
+php artisan make:model Role --migration
+php artisan migrate
+php artisan migrate:refresh
+
+
+composer require php-open-source-saver/jwt-auth
+php artisan vendor:publish --provider="PHPOpenSourceSaver\JWTAuth\Providers\LaravelServiceProvider"
+php artisan jwt:secret
+php artisan make:controller AuthController
+
+composer require DarkaOnLine/L5-Swagger
+php artisan vendor:publish --provider "L5Swagger\L5SwaggerServiceProvider"
+php artisan l5:generate
