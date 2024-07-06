@@ -12,3 +12,6 @@ php artisan make:controller AuthController
 composer require DarkaOnLine/L5-Swagger
 php artisan vendor:publish --provider "L5Swagger\L5SwaggerServiceProvider"
 php artisan l5:generate
+
+omposer install --ignore-platform-reqs
+sudo apt install php8.2-sqlite3
