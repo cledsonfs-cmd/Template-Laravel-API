@@ -15,3 +15,4 @@ php artisan l5:generate
 
 omposer install --ignore-platform-reqs
 sudo apt install php8.2-sqlite3
+php artisan jwt:secret

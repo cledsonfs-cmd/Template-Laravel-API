@@ -10,7 +10,7 @@ use PHPOpenSourceSaver\JWTAuth\Facades\JWTAuth;
 
 class AuthController extends Controller
 {
-  
+
   public function __construct()
   {
       $this->middleware('auth:api', ['except' => ['login','register']]);
@@ -122,7 +122,7 @@ class AuthController extends Controller
 
   /**
  * Login
- * @OA\Post (
+ * @OA\Get (
  *     path="/api/login",
  *     tags={"Auth"},
  *     @OA\RequestBody(
@@ -219,7 +219,7 @@ class AuthController extends Controller
      * Logout
      * @OA\Post (
      *     path="/api/logout",
-     *     tags={"Auth"},       
+     *     tags={"Auth"},
      *      @OA\Response(
      *          response=200,
      *          description="Success",
@@ -353,7 +353,7 @@ public function getAll()
 {
     return response()->json([
         'status' => 'success',
-        'user' => Auth::user()        
+        'user' => Auth::user()
     ]);
 }
 }
