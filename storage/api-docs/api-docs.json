@@ -170,12 +170,12 @@
             }
         },
         "/api/login": {
-            "post": {
+            "get": {
                 "tags": [
                     "Auth"
                 ],
                 "summary": "Login",
-                "operationId": "a3b306d14572d1f4bd6c064b3233e7b8",
+                "operationId": "e3ed30977b8fa50dd9c2f2a132ed09e9",
                 "requestBody": {
                     "content": {
                         "application/json": {
@@ -509,14 +509,44 @@
                                                 },
                                                 "message": {
                                                     "type": "string",
-                                                    "example": "Successfully logged out"
+                                                    "example": null
                                                 }
                                             },
                                             "type": "object"
                                         },
                                         "data": {
-                                            "type": "object",
-                                            "example": []
+                                            "properties": {
+                                                "user": {
+                                                    "properties": {
+                                                        "id": {
+                                                            "type": "number",
+                                                            "example": 1
+                                                        },
+                                                        "name": {
+                                                            "type": "string",
+                                                            "example": "John"
+                                                        },
+                                                        "email": {
+                                                            "type": "string",
+                                                            "example": "john@test.com"
+                                                        },
+                                                        "email_verified_at": {
+                                                            "type": "string",
+                                                            "example": null
+                                                        },
+                                                        "updated_at": {
+                                                            "type": "string",
+                                                            "example": "2022-06-28 06:06:17"
+                                                        },
+                                                        "created_at": {
+                                                            "type": "string",
+                                                            "example": "2022-06-28 06:06:17"
+                                                        }
+                                                    },
+                                                    "type": "object"
+                                                }
+                                            },
+                                            "type": "object"
                                         }
                                     },
                                     "type": "object"
@@ -591,30 +621,126 @@
                                                 },
                                                 "message": {
                                                     "type": "string",
-                                                    "example": "User fetched successfully!"
+                                                    "example": null
                                                 }
                                             },
                                             "type": "object"
                                         },
                                         "data": {
                                             "properties": {
-                                                "user": {
+                                                "role": {
                                                     "properties": {
                                                         "id": {
                                                             "type": "number",
-                                                            "example": 2
+                                                            "example": 1
                                                         },
                                                         "name": {
                                                             "type": "string",
-                                                            "example": "User"
+                                                            "example": "ROLE_NAME"
                                                         },
-                                                        "email": {
+                                                        "updated_at": {
                                                             "type": "string",
-                                                            "example": "user@test.com"
+                                                            "example": "2022-06-28 06:06:17"
                                                         },
-                                                        "email_verified_at": {
+                                                        "created_at": {
                                                             "type": "string",
-                                                            "example": null
+                                                            "example": "2022-06-28 06:06:17"
+                                                        }
+                                                    },
+                                                    "type": "object"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Invalid token",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "meta": {
+                                            "properties": {
+                                                "code": {
+                                                    "type": "number",
+                                                    "example": 422
+                                                },
+                                                "status": {
+                                                    "type": "string",
+                                                    "example": "error"
+                                                },
+                                                "message": {
+                                                    "type": "string",
+                                                    "example": "Unauthenticated."
+                                                }
+                                            },
+                                            "type": "object"
+                                        },
+                                        "data": {
+                                            "type": "object",
+                                            "example": []
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "token": []
+                    }
+                ]
+            }
+        },
+        "/api/status": {
+            "get": {
+                "tags": [
+                    "Status"
+                ],
+                "summary": "Get All",
+                "operationId": "dca1a3c4079a4082561f52866e895e8b",
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "meta": {
+                                            "properties": {
+                                                "code": {
+                                                    "type": "number",
+                                                    "example": 200
+                                                },
+                                                "status": {
+                                                    "type": "string",
+                                                    "example": "success"
+                                                },
+                                                "message": {
+                                                    "type": "string",
+                                                    "example": null
+                                                }
+                                            },
+                                            "type": "object"
+                                        },
+                                        "data": {
+                                            "properties": {
+                                                "status": {
+                                                    "properties": {
+                                                        "id": {
+                                                            "type": "number",
+                                                            "example": 1
+                                                        },
+                                                        "name": {
+                                                            "type": "string",
+                                                            "example": "STATUS_NAME"
                                                         },
                                                         "updated_at": {
                                                             "type": "string",
@@ -695,6 +821,10 @@
         {
             "name": "Roles",
             "description": "Roles"
+        },
+        {
+            "name": "Status",
+            "description": "Status"
         }
     ]
 }

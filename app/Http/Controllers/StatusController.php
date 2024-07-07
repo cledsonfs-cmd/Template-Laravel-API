@@ -10,7 +10,48 @@ class StatusController extends Controller
   public function __construct(){
     $this->middleware('auth:api');
   }
-  
+
+  /**
+ * Get All
+ * @OA\Get (
+ *     path="/api/status",
+ *     tags={"Status"},
+ *      @OA\Response(
+ *          response=200,
+ *          description="Success",
+ *          @OA\JsonContent(
+ *              @OA\Property(property="meta", type="object",
+ *                  @OA\Property(property="code", type="number", example=200),
+ *                  @OA\Property(property="status", type="string", example="success"),
+ *                  @OA\Property(property="message", type="string", example=null),
+ *              ),
+ *              @OA\Property(property="data", type="object",
+ *                  @OA\Property(property="status", type="object",
+ *                      @OA\Property(property="id", type="number", example=1),
+ *                      @OA\Property(property="name", type="string", example="STATUS_NAME"),
+ *                      @OA\Property(property="updated_at", type="string", example="2022-06-28 06:06:17"),
+ *                      @OA\Property(property="created_at", type="string", example="2022-06-28 06:06:17"),
+ *                  ),
+ *              ),
+ *          )
+ *      ),
+ *      @OA\Response(
+ *          response=401,
+ *          description="Invalid token",
+ *          @OA\JsonContent(
+ *              @OA\Property(property="meta", type="object",
+ *                  @OA\Property(property="code", type="number", example=422),
+ *                  @OA\Property(property="status", type="string", example="error"),
+ *                  @OA\Property(property="message", type="string", example="Unauthenticated."),
+ *              ),
+ *              @OA\Property(property="data", type="object", example={}),
+ *          )
+ *      ),
+ *      security={
+ *         {"token": {}}
+ *     }
+ * )
+ */
   public function getAll(){
     $statuss = Status::all();
     return response()->json($statuss);
@@ -26,6 +67,7 @@ class StatusController extends Controller
       ], 404);
     }
   }
+
 
   public function save(Request $request){
     $status = new Status;
@@ -54,7 +96,7 @@ class StatusController extends Controller
 
   public function delete($id){
     if(Status::where('id', $id)->exists()){
-      $status = Status::find($id);       
+      $status = Status::find($id);
       $status->delete();
       return response()->json([
         "message" => "Status Deleted"

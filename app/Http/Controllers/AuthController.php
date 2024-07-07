@@ -16,7 +16,7 @@ class AuthController extends Controller
       $this->middleware('auth:api', ['except' => ['login','register']]);
   }
 
-      /**
+    /**
      * Register
      * @OA\Post (
      *     path="/api/register",
@@ -195,7 +195,7 @@ class AuthController extends Controller
       ]);
       $credentials = $request->only('email', 'password');
 
-      $token = 'barear ' . Auth::attempt($credentials);
+      $token = Auth::attempt($credentials);
       if (!$token) {
           return response()->json([
               'status' => 'error',
@@ -327,9 +327,18 @@ class AuthController extends Controller
  *              @OA\Property(property="meta", type="object",
  *                  @OA\Property(property="code", type="number", example=200),
  *                  @OA\Property(property="status", type="string", example="success"),
- *                  @OA\Property(property="message", type="string", example="Successfully logged out"),
+ *                  @OA\Property(property="message", type="string", example=null),
  *              ),
- *              @OA\Property(property="data", type="object", example={}),
+ *              @OA\Property(property="data", type="object",
+ *                  @OA\Property(property="user", type="object",
+ *                      @OA\Property(property="id", type="number", example=1),
+ *                      @OA\Property(property="name", type="string", example="John"),
+ *                      @OA\Property(property="email", type="string", example="john@test.com"),
+ *                      @OA\Property(property="email_verified_at", type="string", example=null),
+ *                      @OA\Property(property="updated_at", type="string", example="2022-06-28 06:06:17"),
+ *                      @OA\Property(property="created_at", type="string", example="2022-06-28 06:06:17"),
+ *                  ),
+ *              ),
  *          )
  *      ),
  *      @OA\Response(
@@ -352,8 +361,12 @@ class AuthController extends Controller
 public function getAll()
 {
     return response()->json([
-        'status' => 'success',
-        'user' => Auth::user()
+        'meta' => [
+            'code' => 200,
+            'status' => 'success',
+            'message' => 'Successfully logged out',
+        ],
+        'data' => User::all(),
     ]);
 }
 }

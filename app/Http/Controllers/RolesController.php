@@ -14,7 +14,7 @@ class RolesController extends Controller
       $this->middleware('auth:api');
     }
 
-  /**
+/**
  * Get All
  * @OA\Get (
  *     path="/api/roles",
@@ -26,14 +26,12 @@ class RolesController extends Controller
  *              @OA\Property(property="meta", type="object",
  *                  @OA\Property(property="code", type="number", example=200),
  *                  @OA\Property(property="status", type="string", example="success"),
- *                  @OA\Property(property="message", type="string", example="User fetched successfully!"),
+ *                  @OA\Property(property="message", type="string", example=null),
  *              ),
- *              @OA\Property(property="data", type="object", 
- *                  @OA\Property(property="user", type="object",
- *                      @OA\Property(property="id", type="number", example=2),
- *                      @OA\Property(property="name", type="string", example="User"),
- *                      @OA\Property(property="email", type="string", example="user@test.com"),
- *                      @OA\Property(property="email_verified_at", type="string", example=null),
+ *              @OA\Property(property="data", type="object",
+ *                  @OA\Property(property="role", type="object",
+ *                      @OA\Property(property="id", type="number", example=1),
+ *                      @OA\Property(property="name", type="string", example="ROLE_NAME"),
  *                      @OA\Property(property="updated_at", type="string", example="2022-06-28 06:06:17"),
  *                      @OA\Property(property="created_at", type="string", example="2022-06-28 06:06:17"),
  *                  ),
@@ -62,7 +60,7 @@ public function getAll(){
     'meta' => [
         'code' => 200,
         'status' => 'success',
-        'message' => 'User fetched successfully!',
+        'message' => 'Roles fetched successfully!',
     ],
     'data' => [
       Role::all(),
@@ -71,14 +69,6 @@ public function getAll(){
 }
 
     public function findId($id){
-      // $role = Role::find($id);
-      // if(!empty($role)){
-      //   return response()->json($role);
-      // }else{
-      //   return response()->json([
-      //     "message" => "Role not found"
-      //   ], 404);
-      // }
       return response()->json([
         'meta' => [
             'code' => 200,
@@ -91,6 +81,72 @@ public function getAll(){
     ]);
     }
 
+    //  /**
+    //   * Save
+    //   * @OA\Post (
+    //   *     path="/api/roles",
+    //  *     tags={"Roles"},
+    // *     @OA\RequestBody(
+    //  *         @OA\MediaType(
+    //  *             mediaType="application/json",
+    //  *             @OA\Schema(
+    //  *                 @OA\Property(
+    //  *                      type="object",
+    //  *                      @OA\Property(
+    //  *                          property="nome",
+    //  *                          type="string"
+    //  *                      ),
+    //  *                 example={
+    //  *                     "name":"role_nome"
+    //  *                }
+    //  *             )
+    //  *         )
+    // *      ),
+    //  *      @OA\Response(
+    //  *          response=200,
+    //  *          description="Success",
+    //  *          @OA\JsonContent(
+    //  *              @OA\Property(property="meta", type="object",
+    //  *                  @OA\Property(property="code", type="number", example=200),
+    //  *                  @OA\Property(property="status", type="string", example="success"),
+    //  *                  @OA\Property(property="message", type="string", example="Role Added"),
+    //  *              ),
+    //  *              @OA\Property(property="data", type="object",
+    //  *                  @OA\Property(property="nome", type="object",
+    //  *                      @OA\Property(property="id", type="number", example=1),
+    //  *                      @OA\Property(property="nome", type="string", example="role_nome"),
+    //  *                      @OA\Property(property="updated_at", type="string", example="2022-06-28 06:06:17"),
+    //  *                      @OA\Property(property="created_at", type="string", example="2022-06-28 06:06:17"),
+    //  *                  ),
+    //  *                  @OA\Property(property="access_token", type="object",
+    //  *                      @OA\Property(property="token", type="string", example="randomtokenasfhajskfhajf398rureuuhfdshk"),
+    //  *                      @OA\Property(property="type", type="string", example="Bearer"),
+    //  *                      @OA\Property(property="expires_in", type="number", example=3600),
+    //  *                  ),
+    //  *              ),
+    //  *          )
+    //  *      ),
+    //  *      @OA\Response(
+    //  *          response=422,
+    //  *          description="Validation error",
+    //  *          @OA\JsonContent(
+    //  *              @OA\Property(property="meta", type="object",
+    //  *                  @OA\Property(property="code", type="number", example=422),
+    //  *                  @OA\Property(property="status", type="string", example="error"),
+    //  *                  @OA\Property(property="message", type="object",
+    //  *                      @OA\Property(property="nome", type="array", collectionFormat="multi",
+    //  *                        @OA\Items(
+    //  *                          type="string",
+    //  *                          example="The nome has already been taken.",
+    //  *                          )
+    //  *                      ),
+    //  *                  ),
+    //  *              ),
+    //  *              @OA\Property(property="data", type="object", example={}),
+    //  *          )
+    //  *      )
+    //  * )
+    //  */
     public function save(Request $request){
       $role = new Role;
       $role->nome = $request->nome;
@@ -118,7 +174,7 @@ public function getAll(){
 
     public function delete($id){
       if(Role::where('id', $id)->exists()){
-        $role = Role::find($id);       
+        $role = Role::find($id);
         $role->delete();
         return response()->json([
           "message" => "Role Deleted"
@@ -129,5 +185,5 @@ public function getAll(){
         ], 404);
       }
     }
-    
+
 }
