@@ -122,7 +122,7 @@ class AuthController extends Controller
 
   /**
  * Login
- * @OA\Get (
+ * @OA\Post (
  *     path="/api/login",
  *     tags={"Auth"},
  *     @OA\RequestBody(
@@ -359,11 +359,14 @@ class AuthController extends Controller
  * )
  */
 public function getAll()
-{
-  echo "xxxxx";
+  {  
     return response()->json([
+      'meta' => [
+        'code' => 200,
         'status' => 'success',
-        'user' => Auth::user()        
+        'message' => 'Roles fetched successfully!',
+      ],
+    'data' => User::all(),
     ]);
-}
+  }
 }
