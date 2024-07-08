@@ -4,7 +4,7 @@
 ## Description
 
 
-[Template-Laravel-API](https://github.com/cledsonfs-cmd/Template-Laravel-API): TTemplate para o desenvolvimento de APIs com base no framework Laravel.
+[Template-Laravel-API](https://github.com/cledsonfs-cmd/Template-Laravel-API): Template para o desenvolvimento de APIs com base no framework Laravel.
 
 ## Technologies used
 - [PHP 8.1](https://www.php.net/)
