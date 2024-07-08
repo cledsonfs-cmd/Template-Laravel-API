@@ -43,7 +43,7 @@ Route::get('/users', [AuthController::class, 'getAll']);
 // Route::put('/users/{id}', [UserController::class, 'update']);
 // Route::delete('/users/{id}', [UserController::class, 'delete']);
 
-Route::get('/roles', [RolesController::class, 'getAll']);
+Route::post('/roles', [RolesController::class, 'getAll']);
 Route::get('/roles/{id}', [RolesController::class, 'findId']);
 Route::post('/roles', [RolesController::class, 'save']);
 Route::put('/roles/{id}', [RolesController::class, 'update']);

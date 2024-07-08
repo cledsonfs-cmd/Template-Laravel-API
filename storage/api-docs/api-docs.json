@@ -596,12 +596,12 @@
             }
         },
         "/api/roles": {
-            "get": {
+            "post": {
                 "tags": [
                     "Roles"
                 ],
                 "summary": "Get All",
-                "operationId": "e1224adad58d07a036f0f528405e20e9",
+                "operationId": "78eb6381c4c7c284241c9e81180149a3",
                 "responses": {
                     "200": {
                         "description": "Success",

@@ -360,13 +360,10 @@ class AuthController extends Controller
  */
 public function getAll()
 {
+  echo "xxxxx";
     return response()->json([
-        'meta' => [
-            'code' => 200,
-            'status' => 'success',
-            'message' => 'Successfully logged out',
-        ],
-        'data' => User::all(),
+        'status' => 'success',
+        'user' => Auth::user()        
     ]);
 }
 }

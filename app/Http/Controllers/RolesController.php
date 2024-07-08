@@ -16,7 +16,7 @@ class RolesController extends Controller
 
 /**
  * Get All
- * @OA\Get (
+ * @OA\ Post (
  *     path="/api/roles",
  *     tags={"Roles"},
  *      @OA\Response(
@@ -56,6 +56,7 @@ class RolesController extends Controller
  * )
  */
 public function getAll(){
+  echo "xxx";
   return response()->json([
     'meta' => [
         'code' => 200,
@@ -69,6 +70,14 @@ public function getAll(){
 }
 
     public function findId($id){
+      // $role = Role::find($id);
+      // if(!empty($role)){
+      //   return response()->json($role);
+      // }else{
+      //   return response()->json([
+      //     "message" => "Role not found"
+      //   ], 404);
+      // }
       return response()->json([
         'meta' => [
             'code' => 200,
