@@ -483,118 +483,6 @@
                 ]
             }
         },
-        "/api/users": {
-            "get": {
-                "tags": [
-                    "Auth"
-                ],
-                "summary": "Refresh",
-                "operationId": "2ba0a9e4a936862f7e1c9d177fe44d56",
-                "responses": {
-                    "200": {
-                        "description": "Success",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "properties": {
-                                        "meta": {
-                                            "properties": {
-                                                "code": {
-                                                    "type": "number",
-                                                    "example": 200
-                                                },
-                                                "status": {
-                                                    "type": "string",
-                                                    "example": "success"
-                                                },
-                                                "message": {
-                                                    "type": "string",
-                                                    "example": null
-                                                }
-                                            },
-                                            "type": "object"
-                                        },
-                                        "data": {
-                                            "properties": {
-                                                "user": {
-                                                    "properties": {
-                                                        "id": {
-                                                            "type": "number",
-                                                            "example": 1
-                                                        },
-                                                        "name": {
-                                                            "type": "string",
-                                                            "example": "John"
-                                                        },
-                                                        "email": {
-                                                            "type": "string",
-                                                            "example": "john@test.com"
-                                                        },
-                                                        "email_verified_at": {
-                                                            "type": "string",
-                                                            "example": null
-                                                        },
-                                                        "updated_at": {
-                                                            "type": "string",
-                                                            "example": "2022-06-28 06:06:17"
-                                                        },
-                                                        "created_at": {
-                                                            "type": "string",
-                                                            "example": "2022-06-28 06:06:17"
-                                                        }
-                                                    },
-                                                    "type": "object"
-                                                }
-                                            },
-                                            "type": "object"
-                                        }
-                                    },
-                                    "type": "object"
-                                }
-                            }
-                        }
-                    },
-                    "401": {
-                        "description": "Invalid token",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "properties": {
-                                        "meta": {
-                                            "properties": {
-                                                "code": {
-                                                    "type": "number",
-                                                    "example": 422
-                                                },
-                                                "status": {
-                                                    "type": "string",
-                                                    "example": "error"
-                                                },
-                                                "message": {
-                                                    "type": "string",
-                                                    "example": "Unauthenticated."
-                                                }
-                                            },
-                                            "type": "object"
-                                        },
-                                        "data": {
-                                            "type": "object",
-                                            "example": []
-                                        }
-                                    },
-                                    "type": "object"
-                                }
-                            }
-                        }
-                    }
-                },
-                "security": [
-                    {
-                        "token": []
-                    }
-                ]
-            }
-        },
         "/api/roles": {
             "get": {
                 "tags": [
@@ -1779,6 +1667,118 @@
                     }
                 ]
             }
+        },
+        "/users": {
+            "get": {
+                "tags": [
+                    "User"
+                ],
+                "summary": "Refresh",
+                "operationId": "bb2caab318eadb3d78d950ddf09d4958",
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "meta": {
+                                            "properties": {
+                                                "code": {
+                                                    "type": "number",
+                                                    "example": 200
+                                                },
+                                                "status": {
+                                                    "type": "string",
+                                                    "example": "success"
+                                                },
+                                                "message": {
+                                                    "type": "string",
+                                                    "example": null
+                                                }
+                                            },
+                                            "type": "object"
+                                        },
+                                        "data": {
+                                            "properties": {
+                                                "user": {
+                                                    "properties": {
+                                                        "id": {
+                                                            "type": "number",
+                                                            "example": 1
+                                                        },
+                                                        "name": {
+                                                            "type": "string",
+                                                            "example": "John"
+                                                        },
+                                                        "email": {
+                                                            "type": "string",
+                                                            "example": "john@test.com"
+                                                        },
+                                                        "email_verified_at": {
+                                                            "type": "string",
+                                                            "example": null
+                                                        },
+                                                        "updated_at": {
+                                                            "type": "string",
+                                                            "example": "2022-06-28 06:06:17"
+                                                        },
+                                                        "created_at": {
+                                                            "type": "string",
+                                                            "example": "2022-06-28 06:06:17"
+                                                        }
+                                                    },
+                                                    "type": "object"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Invalid token",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "meta": {
+                                            "properties": {
+                                                "code": {
+                                                    "type": "number",
+                                                    "example": 422
+                                                },
+                                                "status": {
+                                                    "type": "string",
+                                                    "example": "error"
+                                                },
+                                                "message": {
+                                                    "type": "string",
+                                                    "example": "Unauthenticated."
+                                                }
+                                            },
+                                            "type": "object"
+                                        },
+                                        "data": {
+                                            "type": "object",
+                                            "example": []
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "token": []
+                    }
+                ]
+            }
         }
     },
     "components": {
@@ -1802,6 +1802,10 @@
         {
             "name": "Status",
             "description": "Status"
+        },
+        {
+            "name": "User",
+            "description": "User"
         }
     ]
 }
