@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use App\Models\User;
 use PHPOpenSourceSaver\JWTAuth\Facades\JWTAuth;
+use PHPUnit\Metadata\Metadata;
 
 class AuthController extends Controller
 {
@@ -191,12 +192,20 @@ class AuthController extends Controller
   public function login(Request $request)
   {
     $request->validate([
-      'email' => 'required|string|email',
+      'username' => 'required|string|email',
       'password' => 'required|string',
     ]);
-    $credentials = $request->only('email', 'password');
 
-    $token = Auth::attempt($credentials);
+    $credentials = $request->only('username', 'password');
+
+
+    $login = [
+      'email' =>  $credentials['username'],
+      'password' => $credentials['password'],
+    ];
+
+
+    $token = Auth::attempt($login);
     if (!$token) {
       return response()->json([
         'status' => 'error',
@@ -206,11 +215,16 @@ class AuthController extends Controller
 
     $user = Auth::user();
     return response()->json([
-      'status' => 'success',
-      'user' => $user,
-      'authorisation' => [
+      'uuid' => $user->id,
+      'email' => $user->email,
+      'token' => [
         'token' => $token,
-        'type' => 'bearer',
+      ],
+      'provedor' => $user->provedor,
+      'imageUrl' => $user->imageUrl,
+      'role' => [
+        'id' => $user->id_role,
+        'name' => 'ROLE_ADMINISTRATOR'
       ]
     ]);
   }
