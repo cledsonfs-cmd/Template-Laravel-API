@@ -18,3 +18,9 @@ sudo apt install php8.2-sqlite3
 php artisan jwt:secret
 
 sudo apt-get install php8.1-xdebug
+
+sudo apt-get install php-pgsql
+ php artisan migrate:install
+ php artisan migrate
+ php artisan migrate:refreh
+ php artisan make:migration User

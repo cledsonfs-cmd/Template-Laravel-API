@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Role extends Model
 {
-    use HasFactory;
-    protected $table = 'roles';
-    protected $fillable = ['nome',];
+  use HasFactory;
+  protected $table = 'template_laravel.roles';
+  protected $fillable = ['nome',];
 }

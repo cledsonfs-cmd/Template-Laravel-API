@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Role;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -98,26 +99,49 @@ class AuthController extends Controller
    */
   public function register(Request $request)
   {
+
     $request->validate([
-      'name' => 'required|string|max:255',
-      'email' => 'required|string|email|max:255|unique:users',
+      'nome' => 'required|string|max:255',
+      'email' => 'required|string|email|max:255',
       'password' => 'required|string|min:6',
     ]);
 
+    // $request->validate([
+    //   'nome' => 'required|string|max:255',
+    //   'email' => 'required|string|email|max:255|unique:users',
+    //   'password' => 'required|string|min:6',
+    // ]);
+
+    $roles = Role::all()->where('nome', $request->role);
+    if ($roles->isEmpty()) {
+      $role = Role::create([
+        'nome' => $request->role,
+      ]);
+    } else {
+      $role = $roles->first();
+    }
+
     $user = User::create([
-      'name' => $request->name,
+      'name' => $request->nome,
       'email' => $request->email,
       'password' => Hash::make($request->password),
+      'id_role' => $role->id,
+      'id_status' => 1
     ]);
 
     $token = 'bearer ' . Auth::login($user);
+
     return response()->json([
-      'status' => 'success',
-      'message' => 'User created successfully',
-      'user' => $user,
-      'authorisation' => [
+      'uuid' => $user->id,
+      'email' => $user->email,
+      'token' => [
         'token' => $token,
-        'type' => 'bearer',
+      ],
+      'provedor' => $user->provedor,
+      'imageUrl' => $user->imageUrl,
+      'role' => [
+        'id' => $role->id,
+        'name' => $role->nome
       ]
     ]);
   }
@@ -214,6 +238,9 @@ class AuthController extends Controller
     }
 
     $user = Auth::user();
+
+    $role = Role::all()->find($user->id_role);
+
     return response()->json([
       'uuid' => $user->id,
       'email' => $user->email,
@@ -223,8 +250,8 @@ class AuthController extends Controller
       'provedor' => $user->provedor,
       'imageUrl' => $user->imageUrl,
       'role' => [
-        'id' => $user->id_role,
-        'name' => 'ROLE_ADMINISTRATOR'
+        'id' => $role->id,
+        'name' => $role->nome
       ]
     ]);
   }
@@ -273,12 +300,7 @@ class AuthController extends Controller
 
     if ($invalidate) {
       return response()->json([
-        'meta' => [
-          'code' => 200,
-          'status' => 'success',
-          'message' => 'Successfully logged out',
-        ],
-        'data' => [],
+        'Logout efetuado com sucesso!',
       ]);
     }
   }
@@ -319,13 +341,91 @@ class AuthController extends Controller
    */
   public function refresh()
   {
+    $user = Auth::user();
+
+    $role = Role::all()->find($user->id_role);
+
     return response()->json([
-      'status' => 'success',
-      'user' => Auth::user(),
-      'authorisation' => [
+      'uuid' => $user->id,
+      'email' => $user->email,
+      'token' => [
         'token' => Auth::refresh(),
-        'type' => 'bearer',
+      ],
+      'provedor' => $user->provedor,
+      'imageUrl' => $user->imageUrl,
+      'role' => [
+        'id' => $role->id,
+        'name' => $role->nome
       ]
     ]);
+  }
+
+
+  /**
+   * Users
+   * @OA\Get (
+   *     path="/api/users",
+   *     tags={"Auth"},
+   *      @OA\Response(
+   *          response=200,
+   *          description="Success",
+   *          @OA\JsonContent(
+   *              @OA\Property(property="meta", type="object",
+   *                  @OA\Property(property="code", type="number", example=200),
+   *                  @OA\Property(property="status", type="string", example="success"),
+   *                  @OA\Property(property="message", type="string", example=null),
+   *              ),
+   *              @OA\Property(property="data", type="object",
+   *                  @OA\Property(property="user", type="object",
+   *                      @OA\Property(property="id", type="number", example=1),
+   *                      @OA\Property(property="name", type="string", example="John"),
+   *                      @OA\Property(property="email", type="string", example="john@test.com"),
+   *                      @OA\Property(property="email_verified_at", type="string", example=null),
+   *                      @OA\Property(property="updated_at", type="string", example="2022-06-28 06:06:17"),
+   *                      @OA\Property(property="created_at", type="string", example="2022-06-28 06:06:17"),
+   *                  ),
+   *              ),
+   *          )
+   *      ),
+   *      @OA\Response(
+   *          response=401,
+   *          description="Invalid token",
+   *          @OA\JsonContent(
+   *              @OA\Property(property="meta", type="object",
+   *                  @OA\Property(property="code", type="number", example=422),
+   *                  @OA\Property(property="status", type="string", example="error"),
+   *                  @OA\Property(property="message", type="string", example="Unauthenticated."),
+   *              ),
+   *              @OA\Property(property="data", type="object", example={}),
+   *          )
+   *      ),
+   *      security={
+   *         {"token": {}}
+   *     }
+   * )
+   */
+  public function getAll()
+  {
+    $users = User::all();
+
+    $data = collect();
+
+    foreach ($users as $user) {
+      $role = Role::all()->find($user->id_role);
+      $data->push(
+        [
+          'uuid' => $user->id,
+          'email' => $user->email,
+          'provedor' => $user->provedor,
+          'imageUrl' => $user->imageUrl,
+          'role' => [
+            'id' => $role->id,
+            'name' => $role->nome
+          ]
+        ]
+      );
+    }
+
+    return response()->json($data);
   }
 }
